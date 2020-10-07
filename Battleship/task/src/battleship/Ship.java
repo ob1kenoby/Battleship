@@ -23,7 +23,7 @@ public class Ship {
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error! Please enter two coordinates. Try again:\n");
             } catch (NumberFormatException e) {
-                System.out.println("Error! Incorrect coordinates. Try again:\n");
+                System.out.printf("Error! Incorrect coordinates. %s. Try again:%n%n", e.getMessage());
             }
         }
         return new int[0][0];
