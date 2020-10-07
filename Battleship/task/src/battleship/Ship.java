@@ -26,8 +26,38 @@ public class Ship {
             } catch (NumberFormatException e) {
                 System.out.printf("Error! Incorrect coordinates. %s. Try again:%n%n", e.getMessage());
             }
+            try {
+                if (Ship.checkLength(coordinates, size)) {
+                    incorrectInput = true;
+                    System.out.printf("Error! Wrong length of the %s! Try again:%n%n", name);
+                }
+            } catch (Exception e) {
+                System.out.println("Error! Wrong ship location! Try again:\n");
+                incorrectInput = true;
+            }
         }
         return coordinates;
+    }
+
+    private static boolean checkLength(int[][] coordinates, int size) throws Exception {
+        int beginY = coordinates[0][0];
+        int beginX = coordinates[0][1];
+        int endY = coordinates[1][0];
+        int endX = coordinates[1][1];
+        if (beginX == endX) {
+            if (endY > beginY) {
+                return endY - beginY + 1 != size;
+            } else {
+                return beginY - endY + 1 != size;
+            }
+        } else if (beginY == endY) {
+            if (endX > beginX) {
+                return endX - beginX + 1 != size;
+            } else {
+                return beginX - endX + 1 != size;
+            }
+        }
+        throw new Exception();
     }
 
     private static int[][] parseCoordinates(String rawCoordinates) throws NumberFormatException {
@@ -38,9 +68,6 @@ public class Ship {
         int[][] coordinates = new int[2][2];
         for (int i = 0; i < 2; i++) {
             coordinates[i] = convertCoordinate(coordinatesToParse[i]);
-        }
-        if (coordinates[0][0] != coordinates [1][0] && coordinates[0][1] != coordinates [1][1]) {
-            throw new NumberFormatException("The ship should be aligned either horizontally or vertically");
         }
         return coordinates;
     }
