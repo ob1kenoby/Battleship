@@ -14,11 +14,17 @@ public class Ship {
     }
 
     public int[] inputCoordinates(int size, String name) {
-        System.out.printf("Enter the coordinates of the %s (%d cells):%n", name, size);
+        System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", name, size);
         boolean incorrectInput = true;
         Scanner scanner = new Scanner(System.in);
         while (incorrectInput) {
-            String[] coordinates = scanner.nextLine().split(" ");
+            String[] rawCoordinates = scanner.nextLine().split(" ");
+            if (rawCoordinates.length != 2) {
+                System.out.println("Error! You need to enter two coordinates. Try again:\n");
+                incorrectInput = true;
+            } else {
+                // Continue here
+            }
         }
         return new int[0];
     }
