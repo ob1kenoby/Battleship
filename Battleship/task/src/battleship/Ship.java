@@ -15,10 +15,11 @@ public class Ship {
         System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", name, size);
         boolean incorrectInput = true;
         Scanner scanner = new Scanner(System.in);
+        int[][] coordinates = new int[2][2];
         while (incorrectInput) {
             String rawCoordinates = scanner.nextLine();
             try {
-                int[][] coordinates = Ship.parseCoordinates(rawCoordinates);
+                coordinates = Ship.parseCoordinates(rawCoordinates);
                 incorrectInput = false;
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error! Please enter two coordinates. Try again:\n");
@@ -26,7 +27,7 @@ public class Ship {
                 System.out.printf("Error! Incorrect coordinates. %s. Try again:%n%n", e.getMessage());
             }
         }
-        return new int[0][0];
+        return coordinates;
     }
 
     private static int[][] parseCoordinates(String rawCoordinates) throws NumberFormatException {
@@ -37,6 +38,9 @@ public class Ship {
         int[][] coordinates = new int[2][2];
         for (int i = 0; i < 2; i++) {
             coordinates[i] = convertCoordinate(coordinatesToParse[i]);
+        }
+        if (coordinates[0][0] != coordinates [1][0] && coordinates[0][1] != coordinates [1][1]) {
+            throw new NumberFormatException("The ship should be aligned either horizontally or vertically");
         }
         return coordinates;
     }
