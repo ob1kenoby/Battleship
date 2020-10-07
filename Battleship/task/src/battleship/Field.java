@@ -15,6 +15,10 @@ public class Field {
         }
     }
 
+    public void printField() {
+        System.out.println(prepareField());
+    }
+
     private String prepareField() {
         StringBuilder fieldToOutput = new StringBuilder("  1 2 3 4 5 6 7 8 9 10\n");
         String[] letters = "ABCDEFGHIJ".split("");
