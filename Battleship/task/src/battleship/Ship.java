@@ -14,7 +14,7 @@ public class Ship {
     }
 
     public int[] inputCoordinates(int size, String name) {
-        System.out.printf("Enter the coordinates of the %s (%d cells):%n");
+        System.out.printf("Enter the coordinates of the %s (%d cells):%n", name, size);
         boolean incorrectInput = true;
         Scanner scanner = new Scanner(System.in);
         while (incorrectInput) {
