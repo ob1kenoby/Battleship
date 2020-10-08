@@ -25,7 +25,7 @@ public class Field {
         for (int i = 0; i < 10; i++) {
             fieldToOutput.append(letters[i] + " ");
             for (int j = 0; j < 10; j++) {
-                fieldToOutput.append(this.field[i][j] + " ");
+                fieldToOutput.append(this.getField(i, j) + " ");
             }
             fieldToOutput.append("\n");
         }
@@ -46,19 +46,19 @@ public class Field {
         int beginX = Field.rotate(coordinates[0][1], coordinates[1][1])[0];
         int endX = Field.rotate(coordinates[0][1], coordinates[1][1])[0];
 
-        int isAvailable = 0;
+        int available = 0;
 
         for (int i = beginX; i <= endX; i++) {
             for (int j = beginY; j <= endY; j++) {
-                if (this.available[i][j] > 0) {
-                    isAvailable = Math.max(this.available[i][j], isAvailable);
+                if (this.isAvailable(i, j) > 0) {
+                    available = Math.max(this.isAvailable(i, j), available);
                 }
             }
         }
 
-        if (isAvailable == 1) {
+        if (available == 1) {
             throw new ShipTooCloseException();
-        } else if (isAvailable == 2) {
+        } else if (available == 2) {
             throw new TakenByOtherShipException();
         }
 
@@ -71,8 +71,29 @@ public class Field {
         columns[1] = endX < 9 ? endX + 1 : endX;
         for (int i = rows[0]; i <= rows[1] ; i++) {
             for (int j = columns[0]; j <= columns[1]; j++) {
-                if (i >= beginY || i <= endY)
+                if (i >= beginY && i <= endY && j >= beginX && j <= endX) {
+                    placeShip(i, j);
+                    setAvailable(i, j, 2); // the place is occupied by the ship
+                } else {
+                    setAvailable(i, j, 1); // the place is next ot the ship
+                }
             }
         }
+    }
+
+    private char getField(int x, int y) {
+        return field[x][y];
+    }
+
+    private void placeShip(int x, int y) {
+        this.field[x][y] = 'o';
+    }
+
+    private int isAvailable(int x, int y) {
+        return available[x][y];
+    }
+
+    private void setAvailable(int x, int y, int value) {
+        this.available[x][y] = value;
     }
 }
