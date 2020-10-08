@@ -56,7 +56,7 @@ public class Ship {
 
         if (lengthOk) {
             try {
-                this.field.putToField(beginX, endX, beginY, endY);
+                this.field.putToField(coordinates);
             } catch (ShipTooCloseException | TakenByOtherShipException e) {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }

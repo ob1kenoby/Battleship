@@ -40,26 +40,16 @@ public class Field {
         return result;
     }
 
-    public void putToField(int beginX, int endX, int beginY, int endY) throws
-            ShipTooCloseException, TakenByOtherShipException {
-        int[] rotate = Field.rotate(beginX, endX);
-        beginX = rotate[0];
-        endX = rotate[1];
-        rotate = Field.rotate(beginY, endY);
-        beginY = rotate[0];
-        endY = rotate[1];
+    public void putToField(int[][] coordinates) throws ShipTooCloseException, TakenByOtherShipException {
+        int beginY = Field.rotate(coordinates[0][0], coordinates[1][0])[0];
+        int endY = Field.rotate(coordinates[0][0], coordinates[1][0])[1];
+        int beginX = Field.rotate(coordinates[0][1], coordinates[1][1])[0];
+        int endX = Field.rotate(coordinates[0][1], coordinates[1][1])[0];
 
         int isAvailable = 0;
-//        int[] rows = new int[2];
-//        int[] columns = new int[2];
-//
-//        rows[0] = beginY > 0 ? beginY - 1 : beginY;
-//        rows[1] = endY < 9 ? endY + 1 : endY;
-//        columns[0] = beginX > 0 ? beginX - 1 : beginX;
-//        columns[1] = endX < 9 ? endX + 1 : endX;
 
         for (int i = beginX; i <= endX; i++) {
-            for (int j = beginY; j <= beginY; j++) {
+            for (int j = beginY; j <= endY; j++) {
                 if (this.available[i][j] > 0) {
                     isAvailable = Math.max(this.available[i][j], isAvailable);
                 }
@@ -71,5 +61,13 @@ public class Field {
         } else if (isAvailable == 2) {
             throw new TakenByOtherShipException();
         }
+
+//        int[] rows = new int[2];
+//        int[] columns = new int[2];
+//
+//        rows[0] = beginY > 0 ? beginY - 1 : beginY;
+//        rows[1] = endY < 9 ? endY + 1 : endY;
+//        columns[0] = beginX > 0 ? beginX - 1 : beginX;
+//        columns[1] = endX < 9 ? endX + 1 : endX;
     }
 }
