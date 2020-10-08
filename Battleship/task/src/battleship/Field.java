@@ -16,8 +16,8 @@ public class Field {
 
     public void printField() {
         System.out.println(prepareField());
-        System.out.println();
-        System.out.println(debugField());
+//        System.out.println();
+//        System.out.println(debugField());
     }
 
     private String prepareField() {
@@ -25,9 +25,11 @@ public class Field {
         String[] letters = "ABCDEFGHIJ".split("");
 
         for (int i = 0; i < 10; i++) {
-            fieldToOutput.append(letters[i] + " ");
+            fieldToOutput.append(letters[i]);
+            fieldToOutput.append(" ");
             for (int j = 0; j < 10; j++) {
-                fieldToOutput.append(this.getField(i, j) + " ");
+                fieldToOutput.append(this.getField(i, j));
+                fieldToOutput.append(" ");
             }
             fieldToOutput.append("\n");
         }
@@ -40,9 +42,11 @@ public class Field {
         String[] letters = "ABCDEFGHIJ".split("");
 
         for (int i = 0; i < 10; i++) {
-            fieldToOutput.append(letters[i] + " ");
+            fieldToOutput.append(letters[i]);
+            fieldToOutput.append(" ");
             for (int j = 0; j < 10; j++) {
-                fieldToOutput.append(this.isAvailable(i, j) + " ");
+                fieldToOutput.append(this.isAvailable(i, j));
+                fieldToOutput.append(" ");
             }
             fieldToOutput.append("\n");
         }
