@@ -12,13 +12,13 @@ public class Main {
         Map<String, Integer> shipTypes = Ship.getShips();
         Ship[] ships = new Ship[5];
         int i = 0;
-        field.printField();
         for (String shipType : shipTypes.keySet()) {
             int size = shipTypes.get(shipType);
-            ships[i] = new Ship(size, shipType, field);
             field.printField();
+            ships[i] = new Ship(size, shipType, field);
             i++;
         }
+        field.printField();
         return field;
     }
 }

@@ -32,6 +32,8 @@ public class Ship {
                 System.out.println("Error! Wrong ship location! Try again:\n");
             } catch (IncorrectLengthOfShipException e) {
                 System.out.printf("Error! Wrong length of the %s! Try again:%n%n", name);
+            } catch (ShipTooCloseException | TakenByOtherShipException e) {
+            System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
         }
         return coordinates;
@@ -39,7 +41,9 @@ public class Ship {
 
     private void putToField(int[][] coordinates, int size) throws
             WrongPositionOfShipException,
-            IncorrectLengthOfShipException {
+            IncorrectLengthOfShipException,
+            ShipTooCloseException,
+            TakenByOtherShipException{
 
         int beginY = coordinates[0][0];
         int beginX = coordinates[0][1];
@@ -55,11 +59,7 @@ public class Ship {
         }
 
         if (lengthOk) {
-            try {
-                this.field.putToField(coordinates);
-            } catch (ShipTooCloseException | TakenByOtherShipException e) {
-                System.out.println("Error! You placed it too close to another one. Try again:\n");
-            }
+            this.field.putToField(coordinates);
         } else {
             throw new IncorrectLengthOfShipException();
         }

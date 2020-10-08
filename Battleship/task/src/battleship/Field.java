@@ -16,6 +16,8 @@ public class Field {
 
     public void printField() {
         System.out.println(prepareField());
+        System.out.println();
+        System.out.println(debugField());
     }
 
     private String prepareField() {
@@ -26,6 +28,21 @@ public class Field {
             fieldToOutput.append(letters[i] + " ");
             for (int j = 0; j < 10; j++) {
                 fieldToOutput.append(this.getField(i, j) + " ");
+            }
+            fieldToOutput.append("\n");
+        }
+
+        return fieldToOutput.toString();
+    }
+
+    private String debugField() {
+        StringBuilder fieldToOutput = new StringBuilder("  1 2 3 4 5 6 7 8 9 10\n");
+        String[] letters = "ABCDEFGHIJ".split("");
+
+        for (int i = 0; i < 10; i++) {
+            fieldToOutput.append(letters[i] + " ");
+            for (int j = 0; j < 10; j++) {
+                fieldToOutput.append(this.isAvailable(i, j) + " ");
             }
             fieldToOutput.append("\n");
         }
@@ -44,12 +61,12 @@ public class Field {
         int beginY = Field.rotate(coordinates[0][0], coordinates[1][0])[0];
         int endY = Field.rotate(coordinates[0][0], coordinates[1][0])[1];
         int beginX = Field.rotate(coordinates[0][1], coordinates[1][1])[0];
-        int endX = Field.rotate(coordinates[0][1], coordinates[1][1])[0];
+        int endX = Field.rotate(coordinates[0][1], coordinates[1][1])[1];
 
         int available = 0;
 
-        for (int i = beginX; i <= endX; i++) {
-            for (int j = beginY; j <= endY; j++) {
+        for (int i = beginY; i <= endY; i++) {
+            for (int j = beginX; j <= endX; j++) {
                 if (this.isAvailable(i, j) > 0) {
                     available = Math.max(this.isAvailable(i, j), available);
                 }
