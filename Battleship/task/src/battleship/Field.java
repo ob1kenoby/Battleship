@@ -62,12 +62,17 @@ public class Field {
             throw new TakenByOtherShipException();
         }
 
-//        int[] rows = new int[2];
-//        int[] columns = new int[2];
-//
-//        rows[0] = beginY > 0 ? beginY - 1 : beginY;
-//        rows[1] = endY < 9 ? endY + 1 : endY;
-//        columns[0] = beginX > 0 ? beginX - 1 : beginX;
-//        columns[1] = endX < 9 ? endX + 1 : endX;
+        int[] rows = new int[2];
+        int[] columns = new int[2];
+
+        rows[0] = beginY > 0 ? beginY - 1 : beginY;
+        rows[1] = endY < 9 ? endY + 1 : endY;
+        columns[0] = beginX > 0 ? beginX - 1 : beginX;
+        columns[1] = endX < 9 ? endX + 1 : endX;
+        for (int i = rows[0]; i <= rows[1] ; i++) {
+            for (int j = columns[0]; j <= columns[1]; j++) {
+                if (i >= beginY || i <= endY)
+            }
+        }
     }
 }
