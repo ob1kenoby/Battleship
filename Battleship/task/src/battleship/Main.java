@@ -15,7 +15,7 @@ public class Main {
         for (String shipType : shipTypes.keySet()) {
             int size = shipTypes.get(shipType);
             field.printField();
-            ships[i] = new Ship(size, shipType);
+            ships[i] = new Ship(size, shipType, field);
             i++;
         }
         return field;

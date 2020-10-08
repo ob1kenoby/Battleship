@@ -5,13 +5,15 @@ import java.util.*;
 public class Ship {
     private int[][] coordinates;
     private int size;
+    private Field field;
 
-    public Ship(int size, String name) {
+    public Ship(int size, String name, Field field) {
         this.size = size;
-        this.coordinates = Ship.inputCoordinates(size,name);
+        this.field = field;
+        this.coordinates = this.inputCoordinates(size, name);
     }
 
-    private static int[][] inputCoordinates(int size, String name) {
+    private int[][] inputCoordinates(int size, String name) {
         System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", name, size);
         boolean incorrectInput = true;
         Scanner scanner = new Scanner(System.in);
@@ -20,44 +22,66 @@ public class Ship {
             String rawCoordinates = scanner.nextLine();
             try {
                 coordinates = Ship.parseCoordinates(rawCoordinates);
+                this.putToField(coordinates, size);
                 incorrectInput = false;
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error! Please enter two coordinates. Try again:\n");
             } catch (NumberFormatException e) {
                 System.out.printf("Error! Incorrect coordinates. %s. Try again:%n%n", e.getMessage());
-            }
-            try {
-                if (Ship.checkLength(coordinates, size)) {
-                    incorrectInput = true;
-                    System.out.printf("Error! Wrong length of the %s! Try again:%n%n", name);
-                }
-            } catch (Exception e) {
+            } catch (WrongPositionOfShipException e) {
                 System.out.println("Error! Wrong ship location! Try again:\n");
-                incorrectInput = true;
+            } catch (IncorrectLengthOfShipException e) {
+                System.out.printf("Error! Wrong length of the %s! Try again:%n%n", name);
             }
         }
         return coordinates;
     }
 
-    private static boolean checkLength(int[][] coordinates, int size) throws Exception {
+    private void putToField(int[][] coordinates, int size) throws
+            WrongPositionOfShipException,
+            IncorrectLengthOfShipException {
+
         int beginY = coordinates[0][0];
         int beginX = coordinates[0][1];
         int endY = coordinates[1][0];
         int endX = coordinates[1][1];
-        if (beginX == endX) {
-            if (endY > beginY) {
-                return endY - beginY + 1 != size;
-            } else {
-                return beginY - endY + 1 != size;
-            }
-        } else if (beginY == endY) {
-            if (endX > beginX) {
-                return endX - beginX + 1 != size;
-            } else {
-                return beginX - endX + 1 != size;
-            }
+
+        boolean horizontalPosition = checkPosition(beginX, beginY, endX, endY);
+        boolean lengthOk;
+        if (horizontalPosition) {
+            lengthOk = Ship.checkLength(beginY, endY, size);
+        } else {
+            lengthOk = Ship.checkLength(beginX, endX, size);
         }
-        throw new Exception();
+
+        if (lengthOk) {
+            try {
+                this.field.putToField(beginX, endX, beginY, endY);
+            } catch (ShipTooCloseException | TakenByOtherShipException e) {
+                System.out.println("Error! You placed it too close to another one. Try again:\n");
+            }
+        } else {
+            throw new IncorrectLengthOfShipException();
+        }
+    }
+
+    private static boolean checkPosition(int beginX, int beginY, int endX, int endY) throws WrongPositionOfShipException {
+        if (beginX == endX && beginY == endY) {
+            throw new WrongPositionOfShipException();
+        } else if (beginX == endX) {
+            return true;
+        } else if (beginY == endY) {
+            return false;
+        }
+        throw new WrongPositionOfShipException();
+    }
+
+    private static boolean checkLength(int begin, int end, int size){
+        if (end > begin) {
+            return end - begin + 1 == size;
+        } else {
+            return begin - end + 1 == size;
+        }
     }
 
     private static int[][] parseCoordinates(String rawCoordinates) throws NumberFormatException {
