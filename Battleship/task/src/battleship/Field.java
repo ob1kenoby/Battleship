@@ -16,13 +16,6 @@ public class Field {
         }
     }
 
-    public static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
-        if (i >= 0 && i < letters.length) {
-            return letters[i];
-        }
-        throw new ArrayIndexOutOfBoundsException("Input is out of range");
-    }
-
     public void printField() {
         System.out.println(prepareField());
 //        System.out.println();
@@ -123,5 +116,65 @@ public class Field {
 
     private void setAvailable(int x, int y, int value) {
         this.available[x][y] = value;
+    }
+
+    private static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
+        if (i >= 0 && i < letters.length) {
+            return letters[i];
+        }
+        throw new ArrayIndexOutOfBoundsException("Input is out of range");
+    }
+
+    public static int[] convertCoordinate(String s) throws NumberFormatException {
+        int[] coordinate = new int[2];
+        switch (s.charAt(0)) {
+            case 'A':
+            case 'a':
+                coordinate[0] = 0;
+                break;
+            case 'B':
+            case 'b':
+                coordinate[0] = 1;
+                break;
+            case 'C':
+            case 'c':
+                coordinate[0] = 2;
+                break;
+            case 'D':
+            case 'd':
+                coordinate[0] = 3;
+                break;
+            case 'E':
+            case 'e':
+                coordinate[0] = 4;
+                break;
+            case 'F':
+            case 'f':
+                coordinate[0] = 5;
+                break;
+            case 'G':
+            case 'g':
+                coordinate[0] = 6;
+                break;
+            case 'H':
+            case 'h':
+                coordinate[0] = 7;
+                break;
+            case 'I':
+            case 'i':
+                coordinate[0] =  8;
+                break;
+            case 'J':
+            case 'j':
+                coordinate[0] =  9;
+                break;
+            default:
+                throw new NumberFormatException("Only letters A-Z are allowed");
+        }
+        coordinate[1] = Integer.valueOf(s.substring(1)) - 1;
+        if (coordinate[1] < 0 || coordinate[1] > 9) {
+            throw new NumberFormatException("Only numbers from 1 to 10 are allowed");
+        }
+        return coordinate;
     }
 }
