@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Field field = createField();
+        Field fieldOne = createField();
         System.out.println("The game starts!\n");
-        field.printField(true);
-        shoot(field);
-        field.printField(false);
+        fieldOne.printField(true);
+        shoot(fieldOne);
+        fieldOne.printField(false);
     }
 
     private static void shoot(Field field) {
