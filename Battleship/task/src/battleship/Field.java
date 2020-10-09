@@ -114,7 +114,7 @@ public class Field {
         this.field[coordinates[0]][coordinates[1]] = symbol;
     }
 
-    private void putShip(int[] coordinates) {
+    private void putHit(int[] coordinates) {
         this.putSymbolOnMap('X', coordinates);
     }
 
@@ -192,7 +192,7 @@ public class Field {
         }
         int[] coordinates = Field.convertCoordinate(input);
         if (isAvailable(coordinates[0], coordinates[1]) == 2) {
-            this.putShip(coordinates);
+            this.putHit(coordinates);
             return true;
         } else {
             this.putMiss(coordinates);
