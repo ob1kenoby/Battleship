@@ -114,8 +114,12 @@ public class Field {
         this.field[coordinates[0]][coordinates[1]] = symbol;
     }
 
-    private void putHit(int[] coordinates) {
+    private void putHit(int... coordinates) {
         this.putSymbolOnMap('X', coordinates);
+    }
+
+    private void putMiss(int... coordinates) {
+        this.putSymbolOnMap('M', coordinates);
     }
 
     private int isAvailable(int... coordinates) {
