@@ -94,16 +94,16 @@ public class Field {
             for (int j = columns[0]; j <= columns[1]; j++) {
                 if (i >= beginY && i <= endY && j >= beginX && j <= endX) {
                     placeShip(i, j);
-                    setAvailable(i, j, 2); // the place is occupied by the ship
+                    setAvailable(2, i, j); // the place is occupied by the ship
                 } else {
-                    setAvailable(i, j, 1); // the place is next ot the ship
+                    setAvailable(1, i, j); // the place is next ot the ship
                 }
             }
         }
     }
 
-    private char getField(int x, int y) {
-        return field[x][y];
+    private char getField(int... coordinates) {
+        return field[coordinates[0]][coordinates[1]];
     }
 
     private void placeShip(int... coordinates) {
@@ -118,12 +118,12 @@ public class Field {
         this.putSymbolOnMap('X', coordinates);
     }
 
-    private int isAvailable(int x, int y) {
-        return available[x][y];
+    private int isAvailable(int... coordinates) {
+        return available[coordinates[0]][coordinates[1]];
     }
 
-    private void setAvailable(int x, int y, int value) {
-        this.available[x][y] = value;
+    private void setAvailable(int value, int... coordinates) {
+        this.available[coordinates[0]][coordinates[1]] = value;
     }
 
     private static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
@@ -138,7 +138,6 @@ public class Field {
         switch (s.charAt(0)) {
             case 'A':
             case 'a':
-                coordinate[0] = 0;
                 break;
             case 'B':
             case 'b':
