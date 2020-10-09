@@ -106,8 +106,16 @@ public class Field {
         return field[x][y];
     }
 
-    private void placeShip(int x, int y) {
-        this.field[x][y] = 'o';
+    private void placeShip(int... coordinates) {
+        this.putSymbolOnMap('o', coordinates);
+    }
+
+    private void putSymbolOnMap(char symbol, int[] coordinates) {
+        this.field[coordinates[0]][coordinates[1]] = symbol;
+    }
+
+    private void putShip(int[] coordinates) {
+        this.putSymbolOnMap('X', coordinates);
     }
 
     private int isAvailable(int x, int y) {
