@@ -177,4 +177,18 @@ public class Field {
         }
         return coordinate;
     }
+
+    public boolean shootAt(String input) throws NumberFormatException {
+        if (input.length() < 2) {
+            throw new NumberFormatException("You entered the wrong coordinates!");
+        }
+        int[] coordinates = Field.convertCoordinate(input);
+        if (isAvailable(coordinates[0], coordinates[1]) == 2) {
+            this.putShip(coordinates);
+            return true;
+        } else {
+            this.putMiss(coordinates);
+            return false;
+        }
+    }
 }

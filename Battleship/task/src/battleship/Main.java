@@ -15,6 +15,7 @@ public class Main {
             do {
                 System.out.println("Take a shot!\n");
                 String input = scanner.nextLine();
+                boolean isHit = field.shootAt(input);
             } while (incorrectInput);
         }
     }
