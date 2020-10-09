@@ -1,51 +1,70 @@
 package battleship;
 
-public class Field {
-    private char[][] field;
-    private int[][] available; // 0 - available; 1 - another ship; 2 - area around another ship.
-    final private static String[] letters = "ABCDEFGHIJ".split("");
+import java.util.Map;
 
+public class Field {
+    private int[][] field; // Content described in fieldSymbols
+    final private static String[] letters = "ABCDEFGHIJ".split("");
+    final private static Map<Integer, String> squareTypes = Map.of(
+            0, "~", //    0 - available
+            1, "~", //    1 - near another ship
+            2, "o", //    2 - another ship
+            3, "X", //    3 - hit
+            4, "M"  //    4 - miss
+    );
 
     public Field() {
-        this.field = new char[10][10];
-        this.available = new int[10][10];
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                this.field[i][j] = '~';
-            }
+        this.field = new int[10][10];
+    }
+
+    private void putNearShip(int... coordinates) {
+        this.setField(1, coordinates);
+    }
+
+    private void putShip(int... coordinates) {
+        this.setField(2, coordinates);
+    }
+
+    private void putHit(int... coordinates) {
+        this.setField(3, coordinates);
+    }
+
+    private void putMiss(int... coordinates) {
+        this.setField(4, coordinates);
+    }
+
+    private int getField(int... coordinates) {
+        return field[coordinates[0]][coordinates[1]];
+    }
+
+    private void setField(int value, int... coordinates) {
+        this.field[coordinates[0]][coordinates[1]] = value;
+    }
+
+    private static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
+        if (i >= 0 && i < letters.length) {
+            return letters[i];
         }
+        throw new ArrayIndexOutOfBoundsException("Input is out of range");
     }
 
-    public void printField() {
-        System.out.println(prepareField());
-//        System.out.println();
-//        System.out.println(debugField());
+    public void printField(boolean fog) {
+        System.out.println(prepareField(fog));
     }
 
-    private String prepareField() {
+    private String prepareField(boolean fog) {
         StringBuilder fieldToOutput = new StringBuilder("  1 2 3 4 5 6 7 8 9 10\n");
 
         for (int i = 0; i < 10; i++) {
             fieldToOutput.append(Field.getLetter(i));
             fieldToOutput.append(" ");
             for (int j = 0; j < 10; j++) {
-                fieldToOutput.append(this.getField(i, j));
-                fieldToOutput.append(" ");
-            }
-            fieldToOutput.append("\n");
-        }
-
-        return fieldToOutput.toString();
-    }
-
-    private String debugField() {
-        StringBuilder fieldToOutput = new StringBuilder("  1 2 3 4 5 6 7 8 9 10\n");
-
-        for (int i = 0; i < 10; i++) {
-            fieldToOutput.append(Field.getLetter(i));
-            fieldToOutput.append(" ");
-            for (int j = 0; j < 10; j++) {
-                fieldToOutput.append(this.isAvailable(i, j));
+                int squareType = this.getField(i, j);
+                if (fog && squareType == 2) {
+                    fieldToOutput.append("~");
+                } else {
+                    fieldToOutput.append(squareTypes.get(squareType));
+                }
                 fieldToOutput.append(" ");
             }
             fieldToOutput.append("\n");
@@ -71,8 +90,8 @@ public class Field {
 
         for (int i = beginY; i <= endY; i++) {
             for (int j = beginX; j <= endX; j++) {
-                if (this.isAvailable(i, j) > 0) {
-                    available = Math.max(this.isAvailable(i, j), available);
+                if (this.getField(i, j) > 0) {
+                    available = Math.max(this.getField(i, j), available);
                 }
             }
         }
@@ -93,48 +112,12 @@ public class Field {
         for (int i = rows[0]; i <= rows[1] ; i++) {
             for (int j = columns[0]; j <= columns[1]; j++) {
                 if (i >= beginY && i <= endY && j >= beginX && j <= endX) {
-                    placeShip(i, j);
-                    setAvailable(2, i, j); // the place is occupied by the ship
+                    putShip(i, j);
                 } else {
-                    setAvailable(1, i, j); // the place is next ot the ship
+                    putNearShip(i, j); // the place is next ot the ship
                 }
             }
         }
-    }
-
-    private char getField(int... coordinates) {
-        return field[coordinates[0]][coordinates[1]];
-    }
-
-    private void placeShip(int... coordinates) {
-        this.putSymbolOnMap('o', coordinates);
-    }
-
-    private void putSymbolOnMap(char symbol, int[] coordinates) {
-        this.field[coordinates[0]][coordinates[1]] = symbol;
-    }
-
-    private void putHit(int... coordinates) {
-        this.putSymbolOnMap('X', coordinates);
-    }
-
-    private void putMiss(int... coordinates) {
-        this.putSymbolOnMap('M', coordinates);
-    }
-
-    private int isAvailable(int... coordinates) {
-        return available[coordinates[0]][coordinates[1]];
-    }
-
-    private void setAvailable(int value, int... coordinates) {
-        this.available[coordinates[0]][coordinates[1]] = value;
-    }
-
-    private static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
-        if (i >= 0 && i < letters.length) {
-            return letters[i];
-        }
-        throw new ArrayIndexOutOfBoundsException("Input is out of range");
     }
 
     public static int[] convertCoordinate(String s) throws NumberFormatException {
@@ -194,7 +177,7 @@ public class Field {
             throw new NumberFormatException("You entered the wrong coordinates!");
         }
         int[] coordinates = Field.convertCoordinate(input);
-        if (isAvailable(coordinates[0], coordinates[1]) == 2) {
+        if (getField(coordinates[0], coordinates[1]) == 2) {
             this.putHit(coordinates);
             return true;
         } else {

@@ -7,8 +7,9 @@ public class Main {
     public static void main(String[] args) {
         Field field = createField();
         System.out.println("The game starts!\n");
-        field.printField();
+        field.printField(true);
         shoot(field);
+        field.printField(false);
     }
 
     private static void shoot(Field field) {
@@ -26,7 +27,7 @@ public class Main {
                 }
             } while (incorrectInput);
             System.out.println();
-            field.printField();
+            field.printField(true);
             if (isHit) {
                 System.out.println("You hit a ship!");
             } else {
@@ -42,11 +43,11 @@ public class Main {
         int i = 0;
         for (String shipType : shipTypes.keySet()) {
             int size = shipTypes.get(shipType);
-            field.printField();
+            field.printField(false);
             ships[i] = new Ship(size, shipType, field);
             i++;
         }
-        field.printField();
+        field.printField(false);
         return field;
     }
 }
