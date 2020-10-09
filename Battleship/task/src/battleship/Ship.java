@@ -36,6 +36,7 @@ public class Ship {
             System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
         }
+        scanner.close();
         return coordinates;
     }
 

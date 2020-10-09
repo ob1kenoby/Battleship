@@ -3,6 +3,8 @@ package battleship;
 public class Field {
     private char[][] field;
     private int[][] available; // 0 - available; 1 - another ship; 2 - area around another ship.
+    final private static String[] letters = "ABCDEFGHIJ".split("");
+
 
     public Field() {
         this.field = new char[10][10];
@@ -14,6 +16,13 @@ public class Field {
         }
     }
 
+    public static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
+        if (i >= 0 && i < letters.length) {
+            return letters[i];
+        }
+        throw new ArrayIndexOutOfBoundsException("Input is out of range");
+    }
+
     public void printField() {
         System.out.println(prepareField());
 //        System.out.println();
@@ -22,10 +31,9 @@ public class Field {
 
     private String prepareField() {
         StringBuilder fieldToOutput = new StringBuilder("  1 2 3 4 5 6 7 8 9 10\n");
-        String[] letters = "ABCDEFGHIJ".split("");
 
         for (int i = 0; i < 10; i++) {
-            fieldToOutput.append(letters[i]);
+            fieldToOutput.append(Field.getLetter(i));
             fieldToOutput.append(" ");
             for (int j = 0; j < 10; j++) {
                 fieldToOutput.append(this.getField(i, j));
@@ -39,10 +47,9 @@ public class Field {
 
     private String debugField() {
         StringBuilder fieldToOutput = new StringBuilder("  1 2 3 4 5 6 7 8 9 10\n");
-        String[] letters = "ABCDEFGHIJ".split("");
 
         for (int i = 0; i < 10; i++) {
-            fieldToOutput.append(letters[i]);
+            fieldToOutput.append(Field.getLetter(i));
             fieldToOutput.append(" ");
             for (int j = 0; j < 10; j++) {
                 fieldToOutput.append(this.isAvailable(i, j));
