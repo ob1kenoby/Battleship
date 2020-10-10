@@ -3,26 +3,27 @@ package battleship;
 import java.util.*;
 
 public class Ship {
-    private final int[][] COORDINATES;
+    private final String NAME;
     private final int SIZE;
     private final Field FIELD;
 
-    public Ship(int size, String name, Field field) {
-        this.SIZE = size;
+    public Ship(String name, Field field) {
+        this.NAME = name;
+        this.SIZE = Ship.getShips().get(name);
         this.FIELD = field;
-        this.COORDINATES = this.inputCoordinates(size, name);
+        this.inputCoordinates();
     }
 
-    private int[][] inputCoordinates(int size, String name) {
-        System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", name, size);
+    private void inputCoordinates() {
+        System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", this.NAME, this.SIZE);
         boolean incorrectInput = true;
         Scanner scanner = new Scanner(System.in);
-        int[][] coordinates = new int[2][2];
+        int[][] coordinates;
         while (incorrectInput) {
             String rawCoordinates = scanner.nextLine();
             try {
                 coordinates = Ship.parseCoordinates(rawCoordinates);
-                this.putToField(coordinates, size);
+                this.putToField(coordinates);
                 incorrectInput = false;
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error! Please enter two coordinates. Try again:\n");
@@ -31,15 +32,14 @@ public class Ship {
             } catch (WrongPositionOfShipException e) {
                 System.out.println("Error! Wrong ship location! Try again:\n");
             } catch (IncorrectLengthOfShipException e) {
-                System.out.printf("Error! Wrong length of the %s! Try again:%n%n", name);
+                System.out.printf("Error! Wrong length of the %s! Try again:%n%n", this.NAME);
             } catch (ShipTooCloseException | TakenByOtherShipException e) {
             System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
         }
-        return coordinates;
     }
 
-    private void putToField(int[][] coordinates, int size) throws
+    private void putToField(int[][] coordinates) throws
             WrongPositionOfShipException,
             IncorrectLengthOfShipException,
             ShipTooCloseException,
@@ -53,9 +53,9 @@ public class Ship {
         boolean horizontalPosition = checkPosition(beginX, beginY, endX, endY);
         boolean lengthOk;
         if (horizontalPosition) {
-            lengthOk = Ship.checkLength(beginY, endY, size);
+            lengthOk = this.checkLength(beginY, endY);
         } else {
-            lengthOk = Ship.checkLength(beginX, endX, size);
+            lengthOk = this.checkLength(beginX, endX);
         }
 
         if (lengthOk) {
@@ -76,11 +76,11 @@ public class Ship {
         throw new WrongPositionOfShipException();
     }
 
-    private static boolean checkLength(int begin, int end, int size){
+    private boolean checkLength(int begin, int end){
         if (end > begin) {
-            return end - begin + 1 == size;
+            return end - begin + 1 == this.SIZE;
         } else {
-            return begin - end + 1 == size;
+            return begin - end + 1 == this.SIZE;
         }
     }
 

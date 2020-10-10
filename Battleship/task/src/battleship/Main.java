@@ -43,13 +43,9 @@ public class Main {
     private static Field createField() {
         Field field = new Field();
         Map<String, Integer> shipTypes = Ship.getShips();
-        Ship[] ships = new Ship[5];
-        int i = 0;
         for (String shipType : shipTypes.keySet()) {
-            int size = shipTypes.get(shipType);
             field.printField(false);
-            ships[i] = new Ship(size, shipType, field);
-            i++;
+            Ship ship = new Ship(shipType, field);
         }
         field.printField(false);
         return field;
