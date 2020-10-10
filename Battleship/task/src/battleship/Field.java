@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class Field {
     private int[][] field; // Content described in fieldSymbols
+    private int shipCount;
     final private static String[] letters = "ABCDEFGHIJ".split("");
     final private static Map<Integer, String> squareTypes = Map.of(
             0, "~", //    0 - available
@@ -15,6 +16,19 @@ public class Field {
 
     public Field() {
         this.field = new int[10][10];
+        this.shipCount = 0;
+    }
+
+    public int getShipCount() {
+        return shipCount;
+    }
+
+    private void reduceShipCount() {
+        this.shipCount -= 1;
+    }
+
+    private void addShipCount() {
+        this.shipCount += 1;
     }
 
     private void putNearShip(int... coordinates) {
@@ -23,10 +37,12 @@ public class Field {
 
     private void putShip(int... coordinates) {
         this.setField(2, coordinates);
+        this.addShipCount();
     }
 
     private void putHit(int... coordinates) {
         this.setField(3, coordinates);
+        this.reduceShipCount();
     }
 
     private void putMiss(int... coordinates) {
