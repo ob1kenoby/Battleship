@@ -200,6 +200,8 @@ public class Field {
         if (getField(coordinates[0], coordinates[1]) == 2) {
             this.putHit(coordinates);
             return true;
+        } else if (getField(coordinates[0], coordinates[1]) == 3) {
+            return true;
         } else {
             this.putMiss(coordinates);
             return false;

@@ -8,8 +8,12 @@ public class Main {
         Field fieldOne = createField();
         System.out.println("The game starts!\n");
         fieldOne.printField(true);
-        shoot(fieldOne);
+        while (fieldOne.doShipsRemain()) {
+            shoot(fieldOne);
+            fieldOne.printField(false);
+        }
         fieldOne.printField(false);
+        System.out.println("You sank the last ship. You won. Congratulations!");
     }
 
     private static void shoot(Field field) {
