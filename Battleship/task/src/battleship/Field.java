@@ -19,7 +19,11 @@ public class Field {
         this.shipCount = 0;
     }
 
-    public int getShipCount() {
+    public boolean doShipsRemain() {
+        return shipCount > 0;
+    }
+
+    private int getShipCount() {
         return shipCount;
     }
 
