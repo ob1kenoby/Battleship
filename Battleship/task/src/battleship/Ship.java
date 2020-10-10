@@ -3,14 +3,14 @@ package battleship;
 import java.util.*;
 
 public class Ship {
-    private int[][] coordinates;
-    private int size;
-    private Field field;
+    private final int[][] COORDINATES;
+    private final int SIZE;
+    private final Field FIELD;
 
     public Ship(int size, String name, Field field) {
-        this.size = size;
-        this.field = field;
-        this.coordinates = this.inputCoordinates(size, name);
+        this.SIZE = size;
+        this.FIELD = field;
+        this.COORDINATES = this.inputCoordinates(size, name);
     }
 
     private int[][] inputCoordinates(int size, String name) {
@@ -59,7 +59,7 @@ public class Ship {
         }
 
         if (lengthOk) {
-            this.field.putToField(coordinates);
+            this.FIELD.putToField(coordinates);
         } else {
             throw new IncorrectLengthOfShipException();
         }

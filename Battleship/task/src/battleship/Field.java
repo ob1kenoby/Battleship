@@ -3,7 +3,7 @@ package battleship;
 import java.util.Map;
 
 public class Field {
-    private int[][] field; // Content described in fieldSymbols
+    private final int[][] FIELD; // Content described in fieldSymbols
     private int shipCount;
     final private static String[] letters = "ABCDEFGHIJ".split("");
     final private static Map<Integer, String> squareTypes = Map.of(
@@ -15,16 +15,12 @@ public class Field {
     );
 
     public Field() {
-        this.field = new int[10][10];
+        this.FIELD = new int[10][10];
         this.shipCount = 0;
     }
 
     public boolean doShipsRemain() {
         return shipCount > 0;
-    }
-
-    private int getShipCount() {
-        return shipCount;
     }
 
     private void reduceShipCount() {
@@ -54,11 +50,11 @@ public class Field {
     }
 
     private int getField(int... coordinates) {
-        return field[coordinates[0]][coordinates[1]];
+        return FIELD[coordinates[0]][coordinates[1]];
     }
 
     private void setField(int value, int... coordinates) {
-        this.field[coordinates[0]][coordinates[1]] = value;
+        this.FIELD[coordinates[0]][coordinates[1]] = value;
     }
 
     private static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
@@ -185,7 +181,7 @@ public class Field {
             default:
                 throw new NumberFormatException("Only letters A-Z are allowed");
         }
-        coordinate[1] = Integer.valueOf(s.substring(1)) - 1;
+        coordinate[1] = Integer.parseInt(s.substring(1)) - 1;
         if (coordinate[1] < 0 || coordinate[1] > 9) {
             throw new NumberFormatException("Only numbers from 1 to 10 are allowed");
         }
