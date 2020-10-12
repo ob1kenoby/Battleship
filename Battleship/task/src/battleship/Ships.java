@@ -1,21 +1,31 @@
 package battleship;
 
-import java.util.*;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class Ships {
-    private final String NAME;
-    private final int SIZE;
-    private final Field FIELD;
-
-    public Ships(String name, Field field) {
-        this.NAME = name;
-        this.SIZE = Ships.getShips().get(name);
-        this.FIELD = field;
-        this.inputCoordinates();
+    public static Map<String, Integer> getShips() {
+        Map<String, Integer> shipTypes = new LinkedHashMap<>();
+        shipTypes.put("Aircraft Carrier", 5);
+        shipTypes.put("Battleship", 4);
+        shipTypes.put("Submarine", 3);
+        shipTypes.put("Cruiser", 3);
+        shipTypes.put("Destroyer", 2);
+        return shipTypes;
     }
 
-
-    private static boolean checkPosition(int beginX, int beginY, int endX, int endY) throws WrongPositionOfShipException {
+    /**
+     * A* A* => false
+     * *2 *2 => true
+     * A1 B2 || A1 A1 => exception
+     * @param beginX
+     * @param beginY
+     * @param endX
+     * @param endY
+     * @return
+     * @throws WrongPositionOfShipException
+     */
+    static boolean checkPosition(int beginX, int beginY, int endX, int endY) throws WrongPositionOfShipException {
         if (beginX == endX && beginY == endY) {
             throw new WrongPositionOfShipException();
         } else if (beginX == endX) {
@@ -34,13 +44,4 @@ public class Ships {
         }
     }
 
-    public static Map<String, Integer> getShips() {
-        Map<String, Integer> shipTypes = new LinkedHashMap<>();
-        shipTypes.put("Aircraft Carrier", 5);
-        shipTypes.put("Battleship", 4);
-        shipTypes.put("Submarine", 3);
-        shipTypes.put("Cruiser", 3);
-        shipTypes.put("Destroyer", 2);
-        return shipTypes;
-    }
 }

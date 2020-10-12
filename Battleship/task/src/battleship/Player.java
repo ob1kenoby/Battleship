@@ -70,12 +70,12 @@ public class Player {
             ShipTooCloseException,
             TakenByOtherShipException{
 
-        int beginY = coordinates[0][0];
-        int beginX = coordinates[0][1];
-        int endY = coordinates[1][0];
-        int endX = coordinates[1][1];
+        int beginY = coordinates[0][0]; // First letter
+        int beginX = coordinates[0][1]; // First digit
+        int endY = coordinates[1][0];  // Second letter
+        int endX = coordinates[1][1];  // Second digit
 
-        boolean horizontalPosition = checkPosition(beginX, beginY, endX, endY);
+        boolean horizontalPosition = Ships.checkPosition(beginX, beginY, endX, endY);
         boolean lengthOk;
         if (horizontalPosition) {
             lengthOk = checkLength(beginY, endY);
