@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Player playerOne = new Player();
+        Player playerTwo = new Player();
+
         Field fieldOne = createField();
         System.out.println("The game starts!\n");
         fieldOne.printField(true);
