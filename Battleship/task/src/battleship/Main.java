@@ -8,7 +8,6 @@ public class Main {
         Player playerOne = new Player();
         Player playerTwo = new Player();
 
-        Field fieldOne = createField();
         System.out.println("The game starts!\n");
         fieldOne.printField(true);
         while (fieldOne.doShipsRemain()) {
@@ -41,16 +40,5 @@ public class Main {
                 System.out.println("You missed!");
             }
         }
-    }
-
-    private static Field createField() {
-        Field field = new Field();
-        Map<String, Integer> shipTypes = Ship.getShips();
-        for (String shipType : shipTypes.keySet()) {
-            field.printField(false);
-            Ship ship = new Ship(shipType, field);
-        }
-        field.printField(false);
-        return field;
     }
 }

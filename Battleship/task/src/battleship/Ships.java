@@ -2,41 +2,16 @@ package battleship;
 
 import java.util.*;
 
-public class Ship {
+public class Ships {
     private final String NAME;
     private final int SIZE;
     private final Field FIELD;
 
-    public Ship(String name, Field field) {
+    public Ships(String name, Field field) {
         this.NAME = name;
-        this.SIZE = Ship.getShips().get(name);
+        this.SIZE = Ships.getShips().get(name);
         this.FIELD = field;
         this.inputCoordinates();
-    }
-
-    private void inputCoordinates() {
-        System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", this.NAME, this.SIZE);
-        boolean incorrectInput = true;
-        Scanner scanner = new Scanner(System.in);
-        int[][] coordinates;
-        while (incorrectInput) {
-            String rawCoordinates = scanner.nextLine();
-            try {
-                coordinates = Ship.parseCoordinates(rawCoordinates);
-                this.putToField(coordinates);
-                incorrectInput = false;
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Error! Please enter two coordinates. Try again:\n");
-            } catch (NumberFormatException e) {
-                System.out.printf("Error! Incorrect coordinates. %s. Try again:%n%n", e.getMessage());
-            } catch (WrongPositionOfShipException e) {
-                System.out.println("Error! Wrong ship location! Try again:\n");
-            } catch (IncorrectLengthOfShipException e) {
-                System.out.printf("Error! Wrong length of the %s! Try again:%n%n", this.NAME);
-            } catch (ShipTooCloseException | TakenByOtherShipException e) {
-            System.out.println("Error! You placed it too close to another one. Try again:\n");
-            }
-        }
     }
 
     private void putToField(int[][] coordinates) throws
