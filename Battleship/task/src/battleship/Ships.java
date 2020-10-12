@@ -59,18 +59,6 @@ public class Ships {
         }
     }
 
-    private static int[][] parseCoordinates(String rawCoordinates) throws NumberFormatException {
-        String[] coordinatesToParse = rawCoordinates.split(" ");
-        if (coordinatesToParse.length != 2) {
-            throw new ArrayIndexOutOfBoundsException("Wrong input");
-        }
-        int[][] coordinates = new int[2][2];
-        for (int i = 0; i < 2; i++) {
-            coordinates[i] = Field.convertCoordinate(coordinatesToParse[i]);
-        }
-        return coordinates;
-    }
-
     public static Map<String, Integer> getShips() {
         Map<String, Integer> shipTypes = new LinkedHashMap<>();
         shipTypes.put("Aircraft Carrier", 5);

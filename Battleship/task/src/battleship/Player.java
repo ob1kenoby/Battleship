@@ -27,7 +27,7 @@ public class Player {
         while (incorrectInput) {
             String rawCoordinates = scanner.nextLine();
             try {
-                coordinates = Ships.parseCoordinates(rawCoordinates);
+                coordinates = parseCoordinates(rawCoordinates);
                 this.putToField(coordinates);
                 incorrectInput = false;
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -42,6 +42,18 @@ public class Player {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
         }
+    }
+
+    private static int[][] parseCoordinates(String rawCoordinates) throws NumberFormatException {
+        String[] coordinatesToParse = rawCoordinates.split(" ");
+        if (coordinatesToParse.length != 2) {
+            throw new ArrayIndexOutOfBoundsException("Wrong input");
+        }
+        int[][] coordinates = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            coordinates[i] = Field.convertCoordinate(coordinatesToParse[i]);
+        }
+        return coordinates;
     }
 
 }
