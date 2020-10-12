@@ -44,6 +44,14 @@ public class Player {
         }
     }
 
+    /**
+     * Takes String in format X* X* and returns coordinates of the ship for the nested array.
+     * E.g. rawCoordinates = "A1 A5". Output will be [[0, 0], [0, 4]]
+     * In case of incorrect input: incorrect input format or wrong coordinates (e.g. E11) throws exceptions.
+     * @param rawCoordinates
+     * @return coordinates
+     * @throws NumberFormatException
+     */
     private static int[][] parseCoordinates(String rawCoordinates) throws NumberFormatException {
         String[] coordinatesToParse = rawCoordinates.split(" ");
         if (coordinatesToParse.length != 2) {
