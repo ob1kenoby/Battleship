@@ -28,7 +28,7 @@ public class Player {
             String rawCoordinates = scanner.nextLine();
             try {
                 coordinates = parseCoordinates(rawCoordinates);
-                this.putToField(coordinates);
+                this.addShipToField(coordinates);
                 incorrectInput = false;
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error! Please enter two coordinates. Try again:\n");
@@ -56,7 +56,7 @@ public class Player {
         return coordinates;
     }
 
-    private void putToField(int[][] coordinates) throws
+    private void addShipToField(int[][] coordinates) throws
             WrongPositionOfShipException,
             IncorrectLengthOfShipException,
             ShipTooCloseException,
