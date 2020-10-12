@@ -56,4 +56,31 @@ public class Player {
         return coordinates;
     }
 
+    private void putToField(int[][] coordinates) throws
+            WrongPositionOfShipException,
+            IncorrectLengthOfShipException,
+            ShipTooCloseException,
+            TakenByOtherShipException{
+
+        int beginY = coordinates[0][0];
+        int beginX = coordinates[0][1];
+        int endY = coordinates[1][0];
+        int endX = coordinates[1][1];
+
+        boolean horizontalPosition = checkPosition(beginX, beginY, endX, endY);
+        boolean lengthOk;
+        if (horizontalPosition) {
+            lengthOk = checkLength(beginY, endY);
+        } else {
+            lengthOk = checkLength(beginX, endX);
+        }
+
+        if (lengthOk) {
+            field.putToField(coordinates);
+        } else {
+            throw new IncorrectLengthOfShipException();
+        }
+    }
+
+
 }

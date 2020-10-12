@@ -14,31 +14,6 @@ public class Ships {
         this.inputCoordinates();
     }
 
-    private void putToField(int[][] coordinates) throws
-            WrongPositionOfShipException,
-            IncorrectLengthOfShipException,
-            ShipTooCloseException,
-            TakenByOtherShipException{
-
-        int beginY = coordinates[0][0];
-        int beginX = coordinates[0][1];
-        int endY = coordinates[1][0];
-        int endX = coordinates[1][1];
-
-        boolean horizontalPosition = checkPosition(beginX, beginY, endX, endY);
-        boolean lengthOk;
-        if (horizontalPosition) {
-            lengthOk = this.checkLength(beginY, endY);
-        } else {
-            lengthOk = this.checkLength(beginX, endX);
-        }
-
-        if (lengthOk) {
-            this.FIELD.putToField(coordinates);
-        } else {
-            throw new IncorrectLengthOfShipException();
-        }
-    }
 
     private static boolean checkPosition(int beginX, int beginY, int endX, int endY) throws WrongPositionOfShipException {
         if (beginX == endX && beginY == endY) {
