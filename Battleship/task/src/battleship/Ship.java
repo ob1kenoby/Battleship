@@ -119,9 +119,9 @@ public class Ship {
 
     private boolean checkLength(int begin, int end){
         if (end > begin) {
-            return end - begin + 1 == this.SIZE;
+            return end - begin + 1 == size;
         } else {
-            return begin - end + 1 == this.SIZE;
+            return begin - end + 1 == size;
         }
     }
 
