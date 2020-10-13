@@ -1,12 +1,11 @@
 package battleship;
 
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Player playerOne = new Player();
-        Player playerTwo = new Player();
+        Player playerOne = new Player(1);
+        Player playerTwo = new Player(2);
 
         System.out.println("The game starts!\n");
         fieldOne.printField(true);
@@ -33,7 +32,7 @@ public class Main {
                 }
             } while (incorrectInput);
             System.out.println();
-            field.printField(true);
+            field.printMyField(true);
             if (isHit) {
                 System.out.println("You hit a ship!");
             } else {

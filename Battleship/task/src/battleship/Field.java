@@ -64,11 +64,7 @@ public class Field {
         throw new ArrayIndexOutOfBoundsException("Input is out of range");
     }
 
-    public void printField(boolean fog) {
-        System.out.println(prepareField(fog));
-    }
-
-    private String prepareField(boolean fog) {
+    String prepareField(boolean fog) {
         StringBuilder fieldToOutput = new StringBuilder("  1 2 3 4 5 6 7 8 9 10\n");
 
         for (int i = 0; i < 10; i++) {

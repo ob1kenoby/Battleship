@@ -6,8 +6,9 @@ class Player {
 
     private final Field FIELD;
 
-    public Player() {
+    public Player(int i) {
         this.FIELD = new Field();
+        System.out.printf("Player %d, place your ships on the game field %n%n");
         initializeField();
     }
 
@@ -23,7 +24,14 @@ class Player {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
         }
-        FIELD.printField(false);
+        printMyField(false);
     }
 
+    private void printMyField(boolean fog) {
+        System.out.println(FIELD.prepareField(fog));
+    }
+
+    private void printEnemyField() {
+        System.out.println(FIELD.prepareField(true));
+    }
 }
