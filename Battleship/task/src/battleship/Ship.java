@@ -38,7 +38,6 @@ public class Ship {
             String rawCoordinates = scanner.nextLine();
             try {
                 setCoordinates(rawCoordinates);
-                addShipToField();
                 incorrectInput = false;
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error! Please enter two coordinates. Try again:\n");
@@ -59,9 +58,21 @@ public class Ship {
      * E.g. rawCoordinates = "A1 A5" => beginY = 0; beginX = 0; endY = 0, endX = 4;
      * In case of incorrect input: incorrect input format or wrong coordinates (e.g. E11) throws exceptions.
      * @param rawCoordinates
+     * @throws ArrayIndexOutOfBoundsException
      * @throws NumberFormatException
+     * @throws WrongPositionOfShipException
+     * @throws IncorrectLengthOfShipException
+     * @throws ShipTooCloseException
+     * @throws TakenByOtherShipException
      */
-    private void setCoordinates(String rawCoordinates) throws NumberFormatException {
+    private void setCoordinates(String rawCoordinates) throws
+            ArrayIndexOutOfBoundsException,
+            NumberFormatException,
+            WrongPositionOfShipException,
+            IncorrectLengthOfShipException,
+            ShipTooCloseException,
+            TakenByOtherShipException {
+
         String[] coordinatesToParse = rawCoordinates.split(" ");
         if (coordinatesToParse.length != 2) {
             throw new ArrayIndexOutOfBoundsException("Wrong input");
@@ -75,13 +86,6 @@ public class Ship {
         beginX = coordinates[0][1]; // First digit
         endY = coordinates[1][0];  // Second letter
         endX = coordinates[1][1];  // Second digit
-    }
-
-    private void addShipToField() throws
-            WrongPositionOfShipException,
-            IncorrectLengthOfShipException,
-            ShipTooCloseException,
-            TakenByOtherShipException{
 
         boolean horizontalPosition = Ship.checkPosition(beginX, beginY, endX, endY);
         boolean lengthOk;
