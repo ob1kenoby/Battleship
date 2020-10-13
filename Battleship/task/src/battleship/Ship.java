@@ -87,7 +87,7 @@ public class Ship {
         endY = coordinates[1][0];  // Second letter
         endX = coordinates[1][1];  // Second digit
 
-        boolean horizontalPosition = Ship.checkPosition(beginX, beginY, endX, endY);
+        boolean horizontalPosition = Ship.checkPosition();
         boolean lengthOk;
         if (horizontalPosition) {
             lengthOk = checkLength(beginY, endY);
@@ -101,17 +101,12 @@ public class Ship {
     }
 
     /**
+     * @return
      * A* A* => false
      * *2 *2 => true
-     * A1 B2 || A1 A1 => exception
-     * @param beginX
-     * @param beginY
-     * @param endX
-     * @param endY
-     * @return
      * @throws WrongPositionOfShipException
      */
-    static boolean checkPosition(int beginX, int beginY, int endX, int endY) throws WrongPositionOfShipException {
+    private boolean checkPosition() throws WrongPositionOfShipException {
         if (beginX == endX && beginY == endY) {
             throw new WrongPositionOfShipException();
         } else if (beginX == endX) {
