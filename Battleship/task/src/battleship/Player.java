@@ -36,4 +36,8 @@ class Player {
     private void printEnemyField() {
         System.out.println(FIELD.prepareField(true));
     }
+
+    boolean hasRemainingShips() {
+        return FIELD.getShipCount() > 0;
+    }
 }
