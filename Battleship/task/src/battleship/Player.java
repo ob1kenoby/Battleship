@@ -23,8 +23,8 @@ class Player {
             } while (incorrectPlacement); {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
+            printMyField(false);
         }
-        printMyField(false);
     }
 
     private void printMyField(boolean fog) {
