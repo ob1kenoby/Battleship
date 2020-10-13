@@ -77,6 +77,25 @@ public class Ship {
         endX = coordinates[1][1];  // Second digit
     }
 
+    private void addShipToField() throws
+            WrongPositionOfShipException,
+            IncorrectLengthOfShipException,
+            ShipTooCloseException,
+            TakenByOtherShipException{
+
+        boolean horizontalPosition = Ship.checkPosition(beginX, beginY, endX, endY);
+        boolean lengthOk;
+        if (horizontalPosition) {
+            lengthOk = checkLength(beginY, endY);
+        } else {
+            lengthOk = checkLength(beginX, endX);
+        }
+
+        if (!lengthOk) {
+            throw new IncorrectLengthOfShipException();
+        }
+    }
+
     /**
      * A* A* => false
      * *2 *2 => true
