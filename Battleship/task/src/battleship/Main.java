@@ -5,25 +5,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Player playerOne = new Player(1);
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Press Enter and pass the move to another player\n");
-            scanner.nextLine();
-        }
         Player playerTwo = new Player(2);
 
         game(playerOne, playerTwo);
     }
 
     private static void game(Player playerOne, Player playerTwo) {
-
-        System.out.println("The game starts!\n");
-        fieldOne.printField(true);
-        while (fieldOne.doShipsRemain()) {
-            shoot(fieldOne);
-            fieldOne.printField(false);
+        int turn = 0;
+        while (playerOne.hasRemainingShips() && playerTwo.hasRemainingShips()) {
+            turn++;
+            if (turn % 2 == 1) {
+                playerOne.shoot();
+            }
         }
-        fieldOne.printField(false);
-        System.out.println("You sank the last ship. You won. Congratulations!");
     }
 
     private static void shoot(Field field) {

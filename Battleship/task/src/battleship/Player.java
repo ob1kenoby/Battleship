@@ -1,6 +1,7 @@
 package battleship;
 
 import java.util.Map;
+import java.util.Scanner;
 
 class Player {
 
@@ -26,6 +27,11 @@ class Player {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
             printMyField(false);
+            try (Scanner scanner = new Scanner(System.in)) {
+                System.out.println("Press Enter and pass the move to another player");
+                System.out.println("...");
+                scanner.nextLine();
+            }
         }
     }
 
