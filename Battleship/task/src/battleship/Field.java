@@ -19,16 +19,16 @@ public class Field {
         this.shipCount = 0;
     }
 
-    public boolean doShipsRemain() {
-        return shipCount > 0;
-    }
-
     private void reduceShipCount() {
         this.shipCount -= 1;
     }
 
     private void addShipCount() {
         this.shipCount += 1;
+    }
+
+    int getShipCount() {
+        return this.shipCount;
     }
 
     private void addShipIsNearCell(int... coordinates) {
@@ -57,13 +57,6 @@ public class Field {
         this.FIELD[coordinates[0]][coordinates[1]] = value;
     }
 
-    private static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
-        if (i >= 0 && i < letters.length) {
-            return letters[i];
-        }
-        throw new ArrayIndexOutOfBoundsException("Input is out of range");
-    }
-
     String prepareField(boolean fog) {
         StringBuilder fieldToOutput = new StringBuilder("  1 2 3 4 5 6 7 8 9 10\n");
 
@@ -83,6 +76,13 @@ public class Field {
         }
 
         return fieldToOutput.toString();
+    }
+
+    private static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
+        if (i >= 0 && i < letters.length) {
+            return letters[i];
+        }
+        throw new ArrayIndexOutOfBoundsException("Input is out of range");
     }
 
     /**
