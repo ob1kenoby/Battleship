@@ -76,10 +76,10 @@ public class Ship {
             coordinates[i] = Field.convertCoordinate(coordinatesToParse[i]);
         }
 
-        beginY = coordinates[0][0]; // First letter
-        beginX = coordinates[0][1]; // First digit
-        endY = coordinates[1][0];  // Second letter
-        endX = coordinates[1][1];  // Second digit
+        beginY = Math.min(coordinates[0][0], coordinates[1][0]); // First letter
+        beginX = Math.min(coordinates[0][1], coordinates[1][1]); // First digit
+        endY = Math.max(coordinates[0][0], coordinates[1][0]);  // Second letter
+        endX = Math.max(coordinates[0][1], coordinates[1][1]);  // Second digit
 
         boolean horizontalPosition = checkPosition();
         boolean lengthOk;

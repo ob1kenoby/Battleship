@@ -89,19 +89,7 @@ public class Field {
         return fieldToOutput.toString();
     }
 
-    private static int[] rotate(int begin, int end) {
-        int[] result = new int[2];
-        result[0] = Math.min(begin, end);
-        result[1] = Math.max(begin, end);
-        return result;
-    }
-
-    public void putToField(int[][] coordinates) throws ShipTooCloseException, TakenByOtherShipException {
-        int beginY = Field.rotate(coordinates[0][0], coordinates[1][0])[0];
-        int endY = Field.rotate(coordinates[0][0], coordinates[1][0])[1];
-        int beginX = Field.rotate(coordinates[0][1], coordinates[1][1])[0];
-        int endX = Field.rotate(coordinates[0][1], coordinates[1][1])[1];
-
+    public void putToField(Ship ship) throws ShipTooCloseException, TakenByOtherShipException {
         int available = 0;
 
         for (int i = beginY; i <= endY; i++) {

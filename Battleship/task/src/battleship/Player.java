@@ -1,12 +1,10 @@
 package battleship;
 
-import java.util.List;
 import java.util.Map;
 
 class Player {
 
     private Field field;
-    private List<Ship> fleet;
 
     public Player() {
         this.field = new Field();
