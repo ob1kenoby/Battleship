@@ -23,6 +23,10 @@ public class Field {
         this.SHIPS = new HashMap<>();
     }
 
+    Ship getShip(int[] coordinates) {
+        return SHIPS.get(coordinates);
+    }
+
     int getShipCount() {
         return shipCount;
     }

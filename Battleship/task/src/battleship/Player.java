@@ -59,6 +59,7 @@ class Player {
 
             System.out.println();
             if (isHit) {
+                Ship ship = FIELD.
                 System.out.println("You hit a ship!");
             } else {
                 System.out.println("You missed!");
