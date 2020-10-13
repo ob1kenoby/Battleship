@@ -11,6 +11,11 @@ public class Main {
         }
         Player playerTwo = new Player(2);
 
+        game(playerOne, playerTwo);
+    }
+
+    private static void game(Player playerOne, Player playerTwo) {
+
         System.out.println("The game starts!\n");
         fieldOne.printField(true);
         while (fieldOne.doShipsRemain()) {
