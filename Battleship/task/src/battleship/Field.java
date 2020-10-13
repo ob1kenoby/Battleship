@@ -31,11 +31,11 @@ public class Field {
         this.shipCount += 1;
     }
 
-    private void putNearShip(int... coordinates) {
+    private void addShipIsNearCell(int... coordinates) {
         this.setField(1, coordinates);
     }
 
-    private void putShip(int... coordinates) {
+    private void addShipCell(int... coordinates) {
         this.setField(2, coordinates);
         this.addShipCount();
     }
@@ -89,11 +89,16 @@ public class Field {
         return fieldToOutput.toString();
     }
 
-    boolean putToField(Ship ship) {
+    /**
+     * Adds a ship to the field.
+     * @param ship
+     * @return true is unsuccessful / false if successful
+     */
+    boolean addShipToField(Ship ship) {
         int available = 0;
 
-        for (int i = beginY; i <= endY; i++) {
-            for (int j = beginX; j <= endX; j++) {
+        for (int i = ship.getBeginY(); i <= ship.getEndY(); i++) {
+            for (int j = ship.getBeginX(); j <= ship.getEndX(); j++) {
                 if (this.getField(i, j) > 0) {
                     available = Math.max(this.getField(i, j), available);
                 }
@@ -109,19 +114,24 @@ public class Field {
         int[] rows = new int[2];
         int[] columns = new int[2];
 
-        rows[0] = beginY > 0 ? beginY - 1 : beginY;
-        rows[1] = endY < 9 ? endY + 1 : endY;
-        columns[0] = beginX > 0 ? beginX - 1 : beginX;
-        columns[1] = endX < 9 ? endX + 1 : endX;
+//      adding a ship: the coordinates from rows[0] to rows[1] && from columns[0] to columns[1]
+//      become unavailable to other ships
+
+        rows[0] = ship.getBeginY() > 0 ? ship.getBeginY() - 1 : ship.getBeginY();
+        rows[1] = ship.getEndY() < 9 ? ship.getEndY() + 1 : ship.getEndY();
+        columns[0] = ship.getBeginX() > 0 ? ship.getBeginX() - 1 : ship.getBeginX();
+        columns[1] = ship.getEndX() < 9 ? ship.getEndX() + 1 : ship.getEndX();
+
         for (int i = rows[0]; i <= rows[1] ; i++) {
             for (int j = columns[0]; j <= columns[1]; j++) {
-                if (i >= beginY && i <= endY && j >= beginX && j <= endX) {
-                    putShip(i, j);
+                if (i >= ship.getBeginY() && i <= ship.getEndY() && j >= ship.getBeginX() && j <= ship.getEndX()) {
+                    addShipCell(i, j);
                 } else {
-                    putNearShip(i, j); // the place is next ot the ship
+                    addShipIsNearCell(i, j); // the place is next to the ship
                 }
             }
         }
+        return false;
     }
 
     public boolean shootAt(String input) throws NumberFormatException {

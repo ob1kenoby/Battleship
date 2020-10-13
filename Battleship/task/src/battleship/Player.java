@@ -18,7 +18,7 @@ class Player {
             boolean incorrectPlacement = true;
             do {
                 Ship ship = new Ship(shipType);
-                incorrectPlacement = field.putToField(ship);
+                incorrectPlacement = field.addShipToField(ship);
             } while (incorrectPlacement); {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }

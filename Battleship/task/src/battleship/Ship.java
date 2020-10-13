@@ -10,6 +10,7 @@ public class Ship {
     private int size;
     private int beginY;
     private int endY;
+
     private int beginX;
     private int endX;
 
@@ -27,6 +28,22 @@ public class Ship {
         this.name = name;
         this.size = getShips().get(name);
         getCoordinatesFromPlayer();
+    }
+
+    int getBeginY() {
+        return beginY;
+    }
+
+    int getEndY() {
+        return endY;
+    }
+
+    int getBeginX() {
+        return beginX;
+    }
+
+    int getEndX() {
+        return endX;
     }
 
     private void getCoordinatesFromPlayer() {
@@ -58,8 +75,6 @@ public class Ship {
      * @throws NumberFormatException
      * @throws WrongPositionOfShipException
      * @throws IncorrectLengthOfShipException
-     * @throws ShipTooCloseException
-     * @throws TakenByOtherShipException
      */
     private void setCoordinates(String rawCoordinates) throws
             ArrayIndexOutOfBoundsException,
