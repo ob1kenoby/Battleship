@@ -132,4 +132,6 @@ public class Ship {
         }
     }
 
+    public boolean hitShip() {
+    }
 }

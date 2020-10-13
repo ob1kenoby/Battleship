@@ -44,6 +44,7 @@ class Player {
         try (Scanner scanner = new Scanner(System.in)) {
             boolean incorrectInput = true;
             boolean isHit = false;
+            boolean isSank = false;
             printBothFields(opponent);
             System.out.printf("Player %d, it's your turn:%n%n", playerNumber);
             do {
@@ -52,14 +53,19 @@ class Player {
                     int[] coordinates = Field.convertCoordinate(input);
                     isHit = opponent.FIELD.shootAtCell(coordinates);
                     incorrectInput = false;
+                    if (isHit) {
+                        Ship ship = FIELD.getShip(coordinates);
+                        isSank = ship.hitShip();
+                    }
                 } catch (NumberFormatException e) {
                     System.out.printf("Error! %s. Try again:%n", e.getMessage());
                 }
             } while (incorrectInput);
 
             System.out.println();
-            if (isHit) {
-                Ship ship = FIELD.
+            if (isSank) {
+                System.out.println("You sank a ship!");
+            } else if (isHit) {
                 System.out.println("You hit a ship!");
             } else {
                 System.out.println("You missed!");
