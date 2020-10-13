@@ -1,10 +1,13 @@
 package battleship;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Field {
     private final int[][] FIELD; // Content described in fieldSymbols
     private int shipCount;
+    private final Map<int[], Ship> SHIPS;
+
     final private static String[] LETTERS = "ABCDEFGHIJ".split("");
     final private static Map<Integer, String> CELL_TYPES = Map.of(
             0, "~", //    0 - available
@@ -17,6 +20,7 @@ public class Field {
     public Field() {
         this.FIELD = new int[10][10];
         this.shipCount = 0;
+        this.SHIPS = new HashMap<>();
     }
 
     int getShipCount() {
@@ -27,7 +31,8 @@ public class Field {
         setField(1, coordinates);
     }
 
-    private void addShipCell(int... coordinates) {
+    private void addShipCell(Ship ship, int... coordinates) {
+        SHIPS.put(coordinates, ship);
         setField(2, coordinates);
         shipCount += 1;
     }
@@ -113,7 +118,7 @@ public class Field {
         for (int i = rows[0]; i <= rows[1] ; i++) {
             for (int j = columns[0]; j <= columns[1]; j++) {
                 if (i >= ship.getBeginY() && i <= ship.getEndY() && j >= ship.getBeginX() && j <= ship.getEndX()) {
-                    addShipCell(i, j);
+                    addShipCell(ship, i, j);
                 } else {
                     addShipIsNearCell(i, j); // the place is next to the ship
                 }
