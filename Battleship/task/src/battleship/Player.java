@@ -5,10 +5,12 @@ import java.util.Map;
 class Player {
 
     private final Field FIELD;
+    private final int playerNumber;
 
     public Player(int i) {
+        this.playerNumber = i;
         this.FIELD = new Field();
-        System.out.printf("Player %d, place your ships on the game field %n%n");
+        System.out.printf("Player %d, place your ships on the game field %n%n", playerNumber);
         initializeField();
     }
 
