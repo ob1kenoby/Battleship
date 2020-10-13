@@ -48,10 +48,9 @@ public class Ship {
 
     private void getCoordinatesFromPlayer() {
         boolean incorrectInput = true;
-        Scanner scanner = new Scanner(System.in);
         while (incorrectInput) {
-            String rawCoordinates = scanner.nextLine();
-            try {
+            try (Scanner scanner = new Scanner(System.in)) {
+                String rawCoordinates = scanner.nextLine();
                 setCoordinates(rawCoordinates);
                 incorrectInput = false;
             } catch (ArrayIndexOutOfBoundsException e) {
