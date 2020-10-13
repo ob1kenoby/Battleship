@@ -30,10 +30,8 @@ public class Ship {
     }
 
     private void getCoordinatesFromPlayer() {
-        System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", name, size);
         boolean incorrectInput = true;
         Scanner scanner = new Scanner(System.in);
-        int[][] coordinates;
         while (incorrectInput) {
             String rawCoordinates = scanner.nextLine();
             try {
@@ -47,8 +45,6 @@ public class Ship {
                 System.out.println("Error! Wrong ship location! Try again:\n");
             } catch (IncorrectLengthOfShipException e) {
                 System.out.printf("Error! Wrong length of the %s! Try again:%n%n", name);
-            } catch (ShipTooCloseException | TakenByOtherShipException e) {
-                System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
         }
     }
@@ -69,9 +65,7 @@ public class Ship {
             ArrayIndexOutOfBoundsException,
             NumberFormatException,
             WrongPositionOfShipException,
-            IncorrectLengthOfShipException,
-            ShipTooCloseException,
-            TakenByOtherShipException {
+            IncorrectLengthOfShipException {
 
         String[] coordinatesToParse = rawCoordinates.split(" ");
         if (coordinatesToParse.length != 2) {
@@ -87,7 +81,7 @@ public class Ship {
         endY = coordinates[1][0];  // Second letter
         endX = coordinates[1][1];  // Second digit
 
-        boolean horizontalPosition = Ship.checkPosition();
+        boolean horizontalPosition = checkPosition();
         boolean lengthOk;
         if (horizontalPosition) {
             lengthOk = checkLength(beginY, endY);
