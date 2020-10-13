@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class Ship {
 
-    private String name;
-    private int size;
+    private final String name;
+    private final int size;
     private int beginY;
     private int endY;
 
@@ -70,11 +70,11 @@ public class Ship {
      * Takes String in format X* X*.
      * E.g. rawCoordinates = "A1 A5" => beginY = 0; beginX = 0; endY = 0, endX = 4;
      * In case of incorrect input: incorrect input format or wrong coordinates (e.g. E11) throws exceptions.
-     * @param rawCoordinates
-     * @throws ArrayIndexOutOfBoundsException
-     * @throws NumberFormatException
-     * @throws WrongPositionOfShipException
-     * @throws IncorrectLengthOfShipException
+     * @param rawCoordinates input of the player
+     * @throws ArrayIndexOutOfBoundsException when the input is in incorrect format
+     * @throws NumberFormatException when the input is not in the range A-J/1-10
+     * @throws WrongPositionOfShipException if the ship is neither horizontal or vertical
+     * @throws IncorrectLengthOfShipException incorrect ship length
      */
     private void setCoordinates(String rawCoordinates) throws
             ArrayIndexOutOfBoundsException,
@@ -113,7 +113,7 @@ public class Ship {
      * @return
      * A* A* => false
      * *2 *2 => true
-     * @throws WrongPositionOfShipException
+     * @throws WrongPositionOfShipException if the ship is neither horizontal or vertical
      */
     private boolean checkPosition() throws WrongPositionOfShipException {
         if (beginX == endX && beginY == endY) {
