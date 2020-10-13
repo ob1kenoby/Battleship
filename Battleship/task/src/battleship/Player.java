@@ -54,7 +54,7 @@ class Player {
                     isHit = opponent.FIELD.shootAtCell(coordinates);
                     incorrectInput = false;
                     if (isHit) {
-                        Ship ship = FIELD.getShip(coordinates);
+                        Ship ship = opponent.FIELD.getShip(coordinates);
                         isSank = ship.hitShip();
                     }
                 } catch (NumberFormatException e) {
@@ -63,7 +63,9 @@ class Player {
             } while (incorrectInput);
 
             System.out.println();
-            if (isSank) {
+            if (!opponent.hasRemainingShips()) {
+                System.out.println("You sank the last ship. You won. Congratulations!");
+            } else if (isSank) {
                 System.out.println("You sank a ship!");
             } else if (isHit) {
                 System.out.println("You hit a ship!");

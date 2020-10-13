@@ -6,8 +6,10 @@ import java.util.Scanner;
 
 public class Ship {
 
-    private final String name;
-    private final int size;
+    private final String NAME;
+    private final int SIZE;
+
+    private int health;
     private int beginY;
     private int endY;
     private int beginX;
@@ -23,9 +25,10 @@ public class Ship {
         return shipTypes;
     }
 
-    public Ship(String name) {
-        this.name = name;
-        this.size = getShips().get(name);
+    public Ship(String NAME) {
+        this.NAME = NAME;
+        this.SIZE = getShips().get(NAME);
+        this.health = SIZE;
         getCoordinatesFromPlayer();
     }
 
@@ -59,7 +62,7 @@ public class Ship {
             } catch (WrongPositionOfShipException e) {
                 System.out.println("Error! Wrong ship location! Try again:\n");
             } catch (IncorrectLengthOfShipException e) {
-                System.out.printf("Error! Wrong length of the %s! Try again:%n%n", name);
+                System.out.printf("Error! Wrong length of the %s! Try again:%n%n", NAME);
             }
         }
     }
@@ -126,12 +129,14 @@ public class Ship {
 
     private boolean checkLength(int begin, int end){
         if (end > begin) {
-            return end - begin + 1 == size;
+            return end - begin + 1 == SIZE;
         } else {
-            return begin - end + 1 == size;
+            return begin - end + 1 == SIZE;
         }
     }
 
     public boolean hitShip() {
+        health--;
+        return health <= 0;
     }
 }

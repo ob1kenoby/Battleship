@@ -18,11 +18,6 @@ public class Main {
                 playerTwo.shoot(playerOne);
             }
         }
-        if (playerOne.hasRemainingShips()) {
-            System.out.println("Player 1 won!");
-        } else {
-            System.out.println("Player 2 won!");
-        }
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 public class Field {
     private final int[][] FIELD; // Content described in fieldSymbols
     private int shipCount;
-    private final Map<int[], Ship> SHIPS;
+    private final Map<Integer, Ship> SHIPS;
 
     final private static String[] LETTERS = "ABCDEFGHIJ".split("");
     final private static Map<Integer, String> CELL_TYPES = Map.of(
@@ -24,7 +24,7 @@ public class Field {
     }
 
     Ship getShip(int[] coordinates) {
-        return SHIPS.get(coordinates);
+        return SHIPS.get(convertCoordinatesForMap(coordinates));
     }
 
     int getShipCount() {
@@ -36,9 +36,13 @@ public class Field {
     }
 
     private void addShipCell(Ship ship, int... coordinates) {
-        SHIPS.put(coordinates, ship);
+        SHIPS.put(convertCoordinatesForMap(coordinates), ship);
         setField(2, coordinates);
         shipCount += 1;
+    }
+
+    private int convertCoordinatesForMap(int... coordinates) {
+        return coordinates[0] * 10 + coordinates[1];
     }
 
     private void addHitCell(int... coordinates) {
