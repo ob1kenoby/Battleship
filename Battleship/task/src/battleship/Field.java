@@ -5,8 +5,8 @@ import java.util.Map;
 public class Field {
     private final int[][] FIELD; // Content described in fieldSymbols
     private int shipCount;
-    final private static String[] letters = "ABCDEFGHIJ".split("");
-    final private static Map<Integer, String> squareTypes = Map.of(
+    final private static String[] LETTERS = "ABCDEFGHIJ".split("");
+    final private static Map<Integer, String> CELL_TYPES = Map.of(
             0, "~", //    0 - available
             1, "~", //    1 - near another ship
             2, "o", //    2 - another ship
@@ -19,34 +19,26 @@ public class Field {
         this.shipCount = 0;
     }
 
-    private void reduceShipCount() {
-        this.shipCount -= 1;
-    }
-
-    private void addShipCount() {
-        this.shipCount += 1;
-    }
-
     int getShipCount() {
-        return this.shipCount;
+        return shipCount;
     }
 
     private void addShipIsNearCell(int... coordinates) {
-        this.setField(1, coordinates);
+        setField(1, coordinates);
     }
 
     private void addShipCell(int... coordinates) {
-        this.setField(2, coordinates);
-        this.addShipCount();
+        setField(2, coordinates);
+        shipCount += 1;
     }
 
-    private void putHit(int... coordinates) {
-        this.setField(3, coordinates);
-        this.reduceShipCount();
+    private void addHitCell(int... coordinates) {
+        setField(3, coordinates);
+        shipCount -= 1;
     }
 
-    private void putMiss(int... coordinates) {
-        this.setField(4, coordinates);
+    private void addMissCell(int... coordinates) {
+        setField(4, coordinates);
     }
 
     private int getField(int... coordinates) {
@@ -54,7 +46,7 @@ public class Field {
     }
 
     private void setField(int value, int... coordinates) {
-        this.FIELD[coordinates[0]][coordinates[1]] = value;
+        FIELD[coordinates[0]][coordinates[1]] = value;
     }
 
     String prepareField(boolean fog) {
@@ -68,7 +60,7 @@ public class Field {
                 if (fog && squareType == 2) {
                     fieldToOutput.append("~");
                 } else {
-                    fieldToOutput.append(squareTypes.get(squareType));
+                    fieldToOutput.append(CELL_TYPES.get(squareType));
                 }
                 fieldToOutput.append(" ");
             }
@@ -79,15 +71,15 @@ public class Field {
     }
 
     private static String getLetter(int i) throws ArrayIndexOutOfBoundsException {
-        if (i >= 0 && i < letters.length) {
-            return letters[i];
+        if (i >= 0 && i < LETTERS.length) {
+            return LETTERS[i];
         }
         throw new ArrayIndexOutOfBoundsException("Input is out of range");
     }
 
     /**
      * Adds a ship to the field.
-     * @param ship
+     * @param ship object of Ship class
      * @return true is unsuccessful / false if successful
      */
     boolean addShipToField(Ship ship) {
@@ -130,18 +122,18 @@ public class Field {
         return false;
     }
 
-    public boolean shootAt(String input) throws NumberFormatException {
+    boolean shootAtCell(String input) throws NumberFormatException {
         if (input.length() < 2) {
             throw new NumberFormatException("You entered the wrong coordinates!");
         }
         int[] coordinates = Field.convertCoordinate(input);
         if (getField(coordinates[0], coordinates[1]) == 2) {
-            this.putHit(coordinates);
+            this.addHitCell(coordinates);
             return true;
         } else if (getField(coordinates[0], coordinates[1]) == 3) {
             return true;
         } else {
-            this.putMiss(coordinates);
+            this.addMissCell(coordinates);
             return false;
         }
     }

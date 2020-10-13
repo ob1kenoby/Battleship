@@ -26,17 +26,52 @@ class Player {
             } while (incorrectPlacement); {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
-            printMyField(false);
-            try (Scanner scanner = new Scanner(System.in)) {
-                System.out.println("Press Enter and pass the move to another player");
-                System.out.println("...");
-                scanner.nextLine();
-            }
+            printMyField();
+            passMove();
         }
     }
 
-    private void printMyField(boolean fog) {
-        System.out.println(FIELD.prepareField(fog));
+    private static void passMove() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Press Enter and pass the move to another player");
+            System.out.println("...");
+            scanner.nextLine();
+        }
+    }
+
+    void shoot() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            boolean incorrectInput = true;
+            boolean isHit = false;
+            printBothFields();
+            System.out.printf("Player %d, it's your turn:%n%n", playerNumber);
+            do {
+                String input = scanner.nextLine();
+                try {
+                    isHit = FIELD.shootAtCell(input);
+                    incorrectInput = false;
+                } catch (NumberFormatException e) {
+                    System.out.printf("Error! %s. Try again:%n", e.getMessage());
+                }
+            } while (incorrectInput);
+            System.out.println();
+            if (isHit) {
+                System.out.println("You hit a ship!");
+            } else {
+                System.out.println("You missed!");
+            }
+        }
+        passMove();
+    }
+
+    private void printBothFields() {
+        printEnemyField();
+        System.out.println("---------------------");
+        printMyField();
+    }
+
+    private void printMyField() {
+        System.out.println(FIELD.prepareField(false));
     }
 
     private void printEnemyField() {
