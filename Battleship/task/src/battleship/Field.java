@@ -89,7 +89,7 @@ public class Field {
         return fieldToOutput.toString();
     }
 
-    public void putToField(Ship ship) throws ShipTooCloseException, TakenByOtherShipException {
+    boolean putToField(Ship ship) {
         int available = 0;
 
         for (int i = beginY; i <= endY; i++) {
@@ -101,9 +101,9 @@ public class Field {
         }
 
         if (available == 1) {
-            throw new ShipTooCloseException();
+            return true;
         } else if (available == 2) {
-            throw new TakenByOtherShipException();
+            return true;
         }
 
         int[] rows = new int[2];

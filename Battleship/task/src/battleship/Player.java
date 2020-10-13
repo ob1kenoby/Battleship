@@ -15,10 +15,11 @@ class Player {
         Map<String, Integer> shipSizes = Ship.getShips();
         for (String shipType : shipSizes.keySet()) {
             System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", shipType, shipSizes.get(shipType));
-            try {
+            boolean incorrectPlacement = true;
+            do {
                 Ship ship = new Ship(shipType);
-                field.putToField(ship);
-            } catch (ShipTooCloseException | TakenByOtherShipException e) {
+                incorrectPlacement = field.putToField(ship);
+            } while (incorrectPlacement); {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
         }
