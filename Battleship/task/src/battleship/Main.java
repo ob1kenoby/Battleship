@@ -5,6 +5,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Player playerOne = new Player(1);
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Press Enter and pass the move to another player\n)";
+            scanner.nextLine();
+        }
         Player playerTwo = new Player(2);
 
         System.out.println("The game starts!\n");
