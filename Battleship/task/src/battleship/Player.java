@@ -49,12 +49,14 @@ class Player {
             do {
                 String input = scanner.nextLine();
                 try {
-                    isHit = opponent.FIELD.shootAtCell(input);
+                    int[] coordinates = Field.convertCoordinate(input);
+                    isHit = opponent.FIELD.shootAtCell(coordinates);
                     incorrectInput = false;
                 } catch (NumberFormatException e) {
                     System.out.printf("Error! %s. Try again:%n", e.getMessage());
                 }
             } while (incorrectInput);
+
             System.out.println();
             if (isHit) {
                 System.out.println("You hit a ship!");

@@ -127,11 +127,7 @@ public class Field {
         return false;
     }
 
-    boolean shootAtCell(String input) throws NumberFormatException {
-        if (input.length() < 2) {
-            throw new NumberFormatException("You entered the wrong coordinates!");
-        }
-        int[] coordinates = Field.convertCoordinate(input);
+    boolean shootAtCell(int[] coordinates) throws NumberFormatException {
         if (getField(coordinates[0], coordinates[1]) == 2) {
             this.addHitCell(coordinates);
             return true;
@@ -144,6 +140,9 @@ public class Field {
     }
 
     static int[] convertCoordinate(String s) throws NumberFormatException {
+        if (s.length() < 2) {
+            throw new NumberFormatException("You entered the wrong coordinates!");
+        }
         int[] coordinate = new int[2];
         switch (s.charAt(0)) {
             case 'A':
