@@ -136,7 +136,23 @@ public class Field {
         }
     }
 
-    public static int[] convertCoordinate(String s) throws NumberFormatException {
+    public boolean shootAt(String input) throws NumberFormatException {
+        if (input.length() < 2) {
+            throw new NumberFormatException("You entered the wrong coordinates!");
+        }
+        int[] coordinates = Field.convertCoordinate(input);
+        if (getField(coordinates[0], coordinates[1]) == 2) {
+            this.putHit(coordinates);
+            return true;
+        } else if (getField(coordinates[0], coordinates[1]) == 3) {
+            return true;
+        } else {
+            this.putMiss(coordinates);
+            return false;
+        }
+    }
+
+    static int[] convertCoordinate(String s) throws NumberFormatException {
         int[] coordinate = new int[2];
         switch (s.charAt(0)) {
             case 'A':
@@ -186,21 +202,5 @@ public class Field {
             throw new NumberFormatException("Only numbers from 1 to 10 are allowed");
         }
         return coordinate;
-    }
-
-    public boolean shootAt(String input) throws NumberFormatException {
-        if (input.length() < 2) {
-            throw new NumberFormatException("You entered the wrong coordinates!");
-        }
-        int[] coordinates = Field.convertCoordinate(input);
-        if (getField(coordinates[0], coordinates[1]) == 2) {
-            this.putHit(coordinates);
-            return true;
-        } else if (getField(coordinates[0], coordinates[1]) == 3) {
-            return true;
-        } else {
-            this.putMiss(coordinates);
-            return false;
-        }
     }
 }

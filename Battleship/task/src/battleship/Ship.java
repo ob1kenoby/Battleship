@@ -38,7 +38,7 @@ public class Ship {
             String rawCoordinates = scanner.nextLine();
             try {
                 setCoordinates(rawCoordinates);
-                field.addShipToField(coordinates);
+                addShipToField();
                 incorrectInput = false;
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error! Please enter two coordinates. Try again:\n");
