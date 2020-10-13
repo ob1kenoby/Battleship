@@ -1,7 +1,5 @@
 package battleship;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
         Player playerOne = new Player(1);
@@ -15,8 +13,15 @@ public class Main {
         while (playerOne.hasRemainingShips() && playerTwo.hasRemainingShips()) {
             turn++;
             if (turn % 2 == 1) {
-                playerOne.shoot();
+                playerOne.shoot(playerTwo);
+            } else {
+                playerTwo.shoot(playerOne);
             }
+        }
+        if (playerOne.hasRemainingShips()) {
+            System.out.println("Player 1 won!");
+        } else {
+            System.out.println("Player 2 won!");
         }
     }
 

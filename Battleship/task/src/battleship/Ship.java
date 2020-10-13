@@ -10,7 +10,6 @@ public class Ship {
     private final int size;
     private int beginY;
     private int endY;
-
     private int beginX;
     private int endX;
 

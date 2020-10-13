@@ -13,11 +13,13 @@ class Player {
         this.FIELD = new Field();
         System.out.printf("Player %d, place your ships on the game field %n%n", playerNumber);
         initializeField();
+        passMove();
     }
 
     private void initializeField() {
         Map<String, Integer> shipSizes = Ship.getShips();
         for (String shipType : shipSizes.keySet()) {
+            printMyField();
             System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", shipType, shipSizes.get(shipType));
             boolean incorrectPlacement;
             do {
@@ -27,7 +29,6 @@ class Player {
                 System.out.println("Error! You placed it too close to another one. Try again:\n");
             }
             printMyField();
-            passMove();
         }
     }
 
@@ -39,16 +40,16 @@ class Player {
         }
     }
 
-    void shoot() {
+    void shoot(Player opponent) {
         try (Scanner scanner = new Scanner(System.in)) {
             boolean incorrectInput = true;
             boolean isHit = false;
-            printBothFields();
+            printBothFields(opponent);
             System.out.printf("Player %d, it's your turn:%n%n", playerNumber);
             do {
                 String input = scanner.nextLine();
                 try {
-                    isHit = FIELD.shootAtCell(input);
+                    isHit = opponent.FIELD.shootAtCell(input);
                     incorrectInput = false;
                 } catch (NumberFormatException e) {
                     System.out.printf("Error! %s. Try again:%n", e.getMessage());
@@ -64,8 +65,8 @@ class Player {
         passMove();
     }
 
-    private void printBothFields() {
-        printEnemyField();
+    private void printBothFields(Player opponent) {
+        opponent.printEnemyField();
         System.out.println("---------------------");
         printMyField();
     }
